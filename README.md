@@ -5,8 +5,11 @@ with additional functionality.
 
 This application is part of the [Individual Software Process](https://cpske.github.io/ISP) course at [Kasetsart University](https://ku.ac.th).
 
+## How to Install and Run
 
-# Project Documents
+To be added.
+
+## Project Documents
 All project documents are in the [Project Wiki](../../wiki/Home).
 - [Vision Statement](../../wiki/Vision%20Statement)
 - [Requirements](../../wiki/Requirements)

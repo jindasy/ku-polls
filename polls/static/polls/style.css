@@ -1,7 +1,60 @@
-li a {
-    color: green;
-}
-
 body {
     background: white url("images/background.jpg") no-repeat;
+}
+
+h1 {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #5F68C0;
+    text-align: center;
+    font-size: 40px;
+}
+
+h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #D559A4;
+    text-align: center;
+    font-size: 30px;
+}
+
+a {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 23px;
+    color: #72487A;
+}
+
+button {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    color: #00BB3C;
+}
+
+p {
+    color: red;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+
+input {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: #00BB3C;
+}
+
+label {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 25px;
+    color: #776467;
+}
+
+table, th, td {
+    border-collapse: collapse;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: #776467;
+}
+
+li {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 25px;
+    color: red;
 }

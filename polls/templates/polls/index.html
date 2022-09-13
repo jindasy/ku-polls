@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-<p style="text-align:center">KU Polls</p>
+<legend><h1 style="text-align:center">KU Polls</h1></legend>
 
 {% if messages %}
 <ul class="messages">
@@ -12,22 +12,25 @@
 </ul>
 {% endif %}
 
-
+<table cellpadding=10>
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
         {% if question.is_published %}
-        <li> {% if question.can_vote %}
-        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
-            <a href="{% url 'polls:detail' question.id %}"><Button>Vote</button></a>
+          {% if question.can_vote %}
+        <tr>
+            <td><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></td>
+            <td><a href="{% url 'polls:detail' question.id %}"><Button>Vote</button></a></td>
             {% else %}
-            <a href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a>
+                <td><a href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a></td>
+                <td> </td>
             {% endif %}
-        <a href="{% url 'polls:results' question.id %}"><Button>Results</button></a>
-        </li>
+        <td><a href="{% url 'polls:results' question.id %}"><Button>Results</button></a></td>
         {% endif %}
     {% endfor %}
+</tr>
     </ul>
+</table>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}

@@ -9,6 +9,9 @@ from .models import Question, Choice
 
 
 class IndexView(generic.ListView):
+    """
+    Index view for list of poll questions.
+    """
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
@@ -23,6 +26,9 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
+    """
+    View for details of question including choices.
+    """
     model = Question
     template_name = 'polls/detail.html'
 
@@ -33,6 +39,9 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, *args, **kwargs):
+        """
+        Redirect to detail page if poll is unavailable for voting.
+        """
         try:
             # question = get_object_or_404(Question, pk=kwargs['pk'])
             question = Question.objects.get(pk=kwargs['pk'])
@@ -51,11 +60,17 @@ class DetailView(generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
+    """
+    View for results of question.
+    """
     model = Question
     template_name = 'polls/results.html'
 
 
 def vote(request, question_id):
+    """
+    Record the vote when user submit it.
+    """
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])

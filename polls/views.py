@@ -80,10 +80,10 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        # if not question.can_vote():
-        #     messages.error(request, "You cannot vote this poll.")
-        #     return HttpResponseRedirect(reverse('polls:index'))
-        # else:
+        if not question.can_vote():
+            messages.error(request, "You cannot vote this poll.")
+            return HttpResponseRedirect(reverse('polls:index'))
+        else:
             selected_choice.votes += 1
             selected_choice.save()
             return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))

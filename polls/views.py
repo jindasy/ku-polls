@@ -6,6 +6,10 @@ from django.utils import timezone
 from django.contrib import messages
 
 from .models import Question, Choice
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 
 class IndexView(generic.ListView):
@@ -24,8 +28,8 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
-
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
+# class DetailView(generic.DetailView):
     """
     View for details of question including choices.
     """
@@ -67,10 +71,15 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required
 def vote(request, question_id):
     """
     Record the vote when user submit it.
     """
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -87,3 +96,19 @@ def vote(request, question_id):
             selected_choice.votes += 1
             selected_choice.save()
             return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def signup(request):
+    """Register a new user."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_passwd = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=raw_passwd)
+            login(request, user)
+            return redirect('polls')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})

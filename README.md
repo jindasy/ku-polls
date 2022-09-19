@@ -28,7 +28,7 @@ This application is part of the [Individual Software Process](https://cpske.gith
 ## Demo Users
 | Username | Password |
 |----------|----------|
-| harry    | hackme22 |
+| nobi     | nobita00 |
 | winky    | lalapo99 |
 
 ## Project Documents

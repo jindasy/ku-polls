@@ -28,6 +28,7 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+
 class DetailView(LoginRequiredMixin, generic.DetailView):
 # class DetailView(generic.DetailView):
     """
@@ -98,7 +99,7 @@ def vote(request, question_id):
         #     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
             try:
                 # get vote from previous vote if it already existed.
-                current_vote = Vote.objects.get(user=request.user, choice__question=question_id) #, choice=selected_choice)
+                current_vote = Vote.objects.get(user=request.user, choice__question=question_id)
                 # Vote.objects.filter(user=request.user, choice__question=question_id)
             except Vote.DoesNotExist:
                 current_vote = Vote.objects.create(user=request.user, choice=selected_choice)
@@ -107,7 +108,6 @@ def vote(request, question_id):
             current_vote.save()
 
             return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
 
 
 def signup(request):
@@ -120,7 +120,8 @@ def signup(request):
             raw_passwd = form.cleaned_data.get('password')
             user = authenticate(username=username, password=raw_passwd)
             login(request, user)
-            return redirect('polls')
+            return HttpResponseRedirect(reverse('polls:index'))
+            # return redirect('polls')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})

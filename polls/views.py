@@ -4,12 +4,12 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
-
-from .models import Question, Choice
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+
+from .models import Question, Choice, Vote
 
 
 class IndexView(generic.ListView):
@@ -93,9 +93,21 @@ def vote(request, question_id):
             messages.error(request, "You cannot vote this poll.")
             return HttpResponseRedirect(reverse('polls:index'))
         else:
-            selected_choice.votes += 1
-            selected_choice.save()
+        #     selected_choice.votes += 1
+        #     selected_choice.save()
+        #     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            try:
+                # get vote from previous vote if it already existed.
+                current_vote = Vote.objects.get(user=request.user, choice__question=question_id) #, choice=selected_choice)
+                # Vote.objects.filter(user=request.user, choice__question=question_id)
+            except Vote.DoesNotExist:
+                current_vote = Vote.objects.create(user=request.user, choice=selected_choice)
+            # save vote with selected choice
+            current_vote.choice = selected_choice
+            current_vote.save()
+
             return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
 
 
 def signup(request):

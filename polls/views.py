@@ -60,8 +60,13 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
             messages.error(request, 'This poll is invalid.')
             return HttpResponseRedirect(reverse('polls:index'))
         else:
+            try:
+                user_vote = Vote.objects.get(user=request.user, choice__in=question.choice_set.all()).choice
+            except Vote.DoesNotExist:
+                user_vote = ''
             return render(request, 'polls/detail.html', {
-                    'question': question, })
+                    'question': question,
+                    'voted': user_vote, })
 
 
 class ResultsView(generic.DetailView):

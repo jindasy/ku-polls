@@ -4,8 +4,12 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
 
-from .models import Question, Choice
+from .models import Question, Choice, Vote
 
 
 class IndexView(generic.ListView):
@@ -25,7 +29,8 @@ class IndexView(generic.ListView):
         ).order_by('-pub_date')[:5]
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
+# class DetailView(generic.DetailView):
     """
     View for details of question including choices.
     """
@@ -55,8 +60,13 @@ class DetailView(generic.DetailView):
             messages.error(request, 'This poll is invalid.')
             return HttpResponseRedirect(reverse('polls:index'))
         else:
+            try:
+                user_vote = Vote.objects.get(user=request.user, choice__in=question.choice_set.all()).choice
+            except Vote.DoesNotExist:
+                user_vote = ''
             return render(request, 'polls/detail.html', {
-                    'question': question, })
+                    'question': question,
+                    'voted': user_vote, })
 
 
 class ResultsView(generic.DetailView):
@@ -67,10 +77,15 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required
 def vote(request, question_id):
     """
     Record the vote when user submit it.
     """
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -84,6 +99,34 @@ def vote(request, question_id):
             messages.error(request, "You cannot vote this poll.")
             return HttpResponseRedirect(reverse('polls:index'))
         else:
-            selected_choice.votes += 1
-            selected_choice.save()
+        #     selected_choice.votes += 1
+        #     selected_choice.save()
+        #     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            try:
+                # get vote from previous vote if it already existed.
+                current_vote = Vote.objects.get(user=request.user, choice__question=question_id)
+                # Vote.objects.filter(user=request.user, choice__question=question_id)
+            except Vote.DoesNotExist:
+                current_vote = Vote.objects.create(user=request.user, choice=selected_choice)
+            # save vote with selected choice
+            current_vote.choice = selected_choice
+            current_vote.save()
+
             return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def signup(request):
+    """Register a new user."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_passwd = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=raw_passwd)
+            login(request, user)
+            return HttpResponseRedirect(reverse('polls:index'))
+            # return redirect('polls')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})

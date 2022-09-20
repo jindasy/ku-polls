@@ -3,8 +3,10 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
-from .models import Question
+from .models import Question, Choice
 
 
 class QuestionModelTests(TestCase):
@@ -151,7 +153,7 @@ class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
         """
         The detail view of a question with a pub_date in the future
-        returns a 404 not found.
+        redirect to index page.
         """
         future_question = create_question(question_text='Future question.', days=5)
         url = reverse('polls:detail', args=(future_question.id,))
@@ -161,9 +163,65 @@ class QuestionDetailViewTests(TestCase):
     def test_past_question(self):
         """
         The detail view of a question with a pub_date in the past
-        displays the question's text.
+        redirect to detail view.
         """
         past_question = create_question(question_text='Past Question.', days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
-        self.assertContains(response, past_question.question_text)
+        # self.assertContains(response, past_question.question_text)
+        self.assertEqual(response.status_code, 302)
+
+
+class AuthenticateUserTest(TestCase):
+    def setUp(self):
+        # superclass setUp creates a Client object and initializes test database
+        super().setUp()
+        self.username = "user"
+        self.password = "test1234"
+        self.user1 = User.objects.create_user(
+                         username=self.username,
+                         password=self.password,
+                         email="testuser@nono.com"
+                         )
+        self.user1.first_name = "Tester"
+        self.user1.save()
+        # a poll question to test voting
+        q = create_question(question_text="First Poll Question", days=1)
+        # create a few choices
+        for n in range(1, 4):
+            choice = Choice(choice_text=f"Choice {n}", question=q)
+            choice.save()
+        self.question = q
+
+    def test_logout(self):
+        """A user can logout using the logout url and redirected to the login page."""
+        logout_url = reverse("logout")
+        # check user already login
+        self.assertTrue(self.client.login(username=self.username, password=self.password))
+        # visit the logout page
+        response = self.client.get(logout_url)
+        self.assertEqual(302, response.status_code)
+        # redirect to Login page
+        self.assertRedirects(response, reverse('login'))
+
+    def test_login_view(self):
+        """User can login using the login view."""
+        login_url = reverse("login")
+        # Can get the login page
+        response = self.client.get(login_url)
+        self.assertEqual(200, response.status_code)
+        # Can login using a POST request
+        # usage: client.post(url, {'key1":"value", "key2":"value"})
+        form_data = {"username": "user",
+                     "password": "test1234"}
+        response = self.client.post(login_url, form_data)
+        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, reverse("polls:index"))
+
+    def test_auth_user_can_vote(self):
+        """Authentication user can summit the vote."""
+        choice = self.question.choice_set.first()
+        form_data = {"choice": f"{choice.id}"}
+        vote_url = reverse('polls:vote', args=[self.question.id])
+        response = self.client.post(vote_url, form_data)
+        self.assertEqual(response.status_code, 302)

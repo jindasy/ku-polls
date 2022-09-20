@@ -2,6 +2,12 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
+<div style="text-align:right" space="10">
+    <a href="{% url 'login' %}" >Login</a> &nbsp;
+    <a href="{% url 'signup' %}">Sign up</a> &nbsp;
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
 <legend><h1 style="text-align:center">KU Polls</h1></legend>
 
 {% if messages %}
@@ -26,9 +32,10 @@
                 <td> </td>
             {% endif %}
         <td><a href="{% url 'polls:results' question.id %}"><Button>Results</button></a></td>
+</tr>
         {% endif %}
     {% endfor %}
-</tr>
+
     </ul>
 </table>
 {% else %}

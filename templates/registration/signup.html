@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
 {% block content %}
 <h2>Register</h2>
 <form method="POST">
@@ -12,3 +16,5 @@
     </table>
 </form>
 {% endblock %}
+
+<a href="{% url 'polls:index' %}"><button>Back to List of Polls</button></a>

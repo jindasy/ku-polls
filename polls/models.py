@@ -1,3 +1,4 @@
+"""Models for objects in polls app."""
 import datetime
 
 from django.db import models
@@ -15,6 +16,7 @@ class Question(models.Model):
     end_date = models.DateTimeField('end date', null=True)
 
     def __str__(self):
+        """String represent question text."""
         return self.question_text
 
     @admin.display(
@@ -23,7 +25,8 @@ class Question(models.Model):
         description='Published recently?',
     )
     def was_published_recently(self):
-        """Check for question that was published recently, not more than 1 day."""
+        """Check for question that was published recently,
+        not more than 1 day."""
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
@@ -33,7 +36,8 @@ class Question(models.Model):
         return now >= self.pub_date
 
     def can_vote(self):
-        """Check of question can vote only in voting period, user cannot vote after end date."""
+        """Check of question can vote only in voting period,
+        user cannot vote after end date."""
         now = timezone.now()
         if self.end_date is None:
             return True
@@ -65,4 +69,5 @@ class Vote(models.Model):
 
     @property
     def question(self):
+        """Question for choice."""
         return self.choice.question

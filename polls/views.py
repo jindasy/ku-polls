@@ -30,7 +30,6 @@ class IndexView(generic.ListView):
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
-# class DetailView(generic.DetailView):
     """
     View for details of question including choices.
     """
@@ -61,7 +60,9 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
             return HttpResponseRedirect(reverse('polls:index'))
         else:
             try:
-                user_vote = Vote.objects.get(user=request.user, choice__in=question.choice_set.all()).choice
+                all_choice = question.choice_set.all()
+                user_vote = Vote.objects.get(user=request.user,
+                                             choice__in=all_choice).choice
             except Vote.DoesNotExist:
                 user_vote = ''
             return render(request, 'polls/detail.html', {
@@ -99,20 +100,23 @@ def vote(request, question_id):
             messages.error(request, "You cannot vote this poll.")
             return HttpResponseRedirect(reverse('polls:index'))
         else:
-        #     selected_choice.votes += 1
-        #     selected_choice.save()
-        #     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            # selected_choice.votes += 1
+            # selected_choice.save()
+            # return HttpResponseRedirect(reverse('polls:results',
+            #                                     args=(question.id,)))
             try:
                 # get vote from previous vote if it already existed.
-                current_vote = Vote.objects.get(user=request.user, choice__question=question_id)
-                # Vote.objects.filter(user=request.user, choice__question=question_id)
+                current_vote = Vote.objects.get(user=request.user,
+                                                choice__question=question_id)
             except Vote.DoesNotExist:
-                current_vote = Vote.objects.create(user=request.user, choice=selected_choice)
+                current_vote = Vote.objects.create(user=request.user,
+                                                   choice=selected_choice)
             # save vote with selected choice
             current_vote.choice = selected_choice
             current_vote.save()
 
-            return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            return HttpResponseRedirect(reverse('polls:results',
+                                                args=(question.id,)))
 
 
 def signup(request):

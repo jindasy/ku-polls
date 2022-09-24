@@ -1,0 +1,390 @@
+[
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "question_text": "What is the best parcel delivery company in Thailand?",
+    "pub_date": "2022-09-05T19:05:04Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 3,
+  "fields": {
+    "question_text": "Which video streaming service do you mostly use?",
+    "pub_date": "2022-09-05T19:18:36Z",
+    "end_date": "2022-09-17T07:12:22Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 4,
+  "fields": {
+    "question_text": "What is your preferred music genre ?",
+    "pub_date": "2022-09-30T17:00:00Z",
+    "end_date": "2022-10-09T17:00:00Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 5,
+  "fields": {
+    "question_text": "What is your favorite province in northern Thailand?",
+    "pub_date": "2022-09-20T13:34:12Z",
+    "end_date": "2022-09-29T17:00:00Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 5,
+  "fields": {
+    "question": 2,
+    "choice_text": "Thailand Post"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 6,
+  "fields": {
+    "question": 2,
+    "choice_text": "Kerry Express"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 7,
+  "fields": {
+    "question": 2,
+    "choice_text": "J&T Express"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 8,
+  "fields": {
+    "question": 2,
+    "choice_text": "Flash Express"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 9,
+  "fields": {
+    "question": 2,
+    "choice_text": "DHL Express"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 10,
+  "fields": {
+    "question": 2,
+    "choice_text": "Best Express"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 11,
+  "fields": {
+    "question": 2,
+    "choice_text": "SCG Express"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 12,
+  "fields": {
+    "question": 2,
+    "choice_text": "Ninja Van"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 13,
+  "fields": {
+    "question": 3,
+    "choice_text": "Netflix"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 14,
+  "fields": {
+    "question": 3,
+    "choice_text": "Disney+"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 15,
+  "fields": {
+    "question": 3,
+    "choice_text": "Apple TV+"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 16,
+  "fields": {
+    "question": 3,
+    "choice_text": "HBO Max"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 17,
+  "fields": {
+    "question": 3,
+    "choice_text": "iQIYI"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 18,
+  "fields": {
+    "question": 3,
+    "choice_text": "We TV+"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 19,
+  "fields": {
+    "question": 4,
+    "choice_text": "Pop"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 20,
+  "fields": {
+    "question": 4,
+    "choice_text": "Hip-hop"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 21,
+  "fields": {
+    "question": 4,
+    "choice_text": "Rock"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 22,
+  "fields": {
+    "question": 4,
+    "choice_text": "Electronic"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 23,
+  "fields": {
+    "question": 4,
+    "choice_text": "Alternative Rock"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 24,
+  "fields": {
+    "question": 4,
+    "choice_text": "Classical"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 25,
+  "fields": {
+    "question": 4,
+    "choice_text": "Country"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 26,
+  "fields": {
+    "question": 4,
+    "choice_text": "Metal"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 27,
+  "fields": {
+    "question": 5,
+    "choice_text": "Chiang Mai"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 28,
+  "fields": {
+    "question": 5,
+    "choice_text": "Lamphun"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 29,
+  "fields": {
+    "question": 5,
+    "choice_text": "Lampang"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 30,
+  "fields": {
+    "question": 5,
+    "choice_text": "Uttaradit"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 31,
+  "fields": {
+    "question": 5,
+    "choice_text": "Phrae"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 32,
+  "fields": {
+    "question": 5,
+    "choice_text": "Nan"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 33,
+  "fields": {
+    "question": 5,
+    "choice_text": "Phayao"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 34,
+  "fields": {
+    "question": 5,
+    "choice_text": "Chiang Rai"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 35,
+  "fields": {
+    "question": 5,
+    "choice_text": "Mae Hong Son"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 36,
+  "fields": {
+    "question": 5,
+    "choice_text": "Nakhon Sawan"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 37,
+  "fields": {
+    "question": 5,
+    "choice_text": "Uthai Thani"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 38,
+  "fields": {
+    "question": 5,
+    "choice_text": "Kamphaeng Phet"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 39,
+  "fields": {
+    "question": 5,
+    "choice_text": "Tak"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 40,
+  "fields": {
+    "question": 5,
+    "choice_text": "Sukhothai"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 41,
+  "fields": {
+    "question": 5,
+    "choice_text": "Phitsanulok"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 42,
+  "fields": {
+    "question": 5,
+    "choice_text": "Phichit"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 43,
+  "fields": {
+    "question": 5,
+    "choice_text": "Phetchabun"
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 16,
+  "fields": {
+    "user": 1,
+    "choice": 5
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 17,
+  "fields": {
+    "user": 1,
+    "choice": 13
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 18,
+  "fields": {
+    "user": 3,
+    "choice": 5
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 19,
+  "fields": {
+    "user": 7,
+    "choice": 6
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 20,
+  "fields": {
+    "user": 1,
+    "choice": 27
+  }
+}
+]

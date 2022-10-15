@@ -1,5 +1,8 @@
 ## Online Polls for Kasetsart University
 
+![Unittest Workflow](https://github.com/jindasy/ku-polls/actions/workflows/python-app.yml/badge.svg)
+[![codecov](https://codecov.io/github/jindasy/ku-polls/branch/master/graph/badge.svg?token=PETFC8UB7I)](https://codecov.io/github/jindasy/ku-polls)
+
 An application for conducting a poll or survey, written in Python using Django. It is based on the [Django Tutorial project][django-tutorial],
 with additional functionality.
 
